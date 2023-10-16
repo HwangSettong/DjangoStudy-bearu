@@ -59,8 +59,10 @@ ROOT_URLCONF = 'anonymous.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            'templates',
+        ],
+        'APP_DIRS': True, # True 로 되어있으면 각 app안에 templates 폴더를 만들어 사용하겠다는 뜻.
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
