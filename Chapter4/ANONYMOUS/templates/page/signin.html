@@ -4,24 +4,63 @@
 <div class="card">
     <div class="card-body">
         <div class="row text-center">
-            <div class="col">
-                <label class="form-lable">아이디</label>
-                <input class="form-control" type="text">
-            </div>
+            <h1>Sign In</h1>
         </div>
-        <div class="row text-center" style="margin-top:10px;">
-            <div class="col">
-                <label class="form-lable">비밀번호</label>
-                <input class="form-control" type="password">
+        <form method="post" id="signin_form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <label class="form-lable" style="font-weight: bold;">아이디</label>
+                    <input class="form-control" name="username" id="username" type="text">
+                </div>
             </div>
-        </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col">
+                    <label class="form-lable" style="font-weight: bold;">비밀번호</label>
+                    <input class="form-control" name="password" id="password" type="password">
+                </div>
+            </div>
+        </form>
         <div class="row text-end" style="margin-top:10px;">
             <div class="col">
-                <button class="btn btn-info">로그인</button>
-                <button class="btn btn-info">회원가입</button>
+                <a class="btn btn-primary m-3" href="{% url 'signup' %}"
+                 style="font-weight: bold;">
+                    회원가입
+                </a>
+                <a class="btn btn-primary" id="signin_btn"
+                 style="font-weight: bold;">
+                    로그인
+                </a>
             </div>
         </div>
+        <script>
+            let signin_btn = document.getElementById("signin_btn");
+            let password = document.getElementById("password");
+            let username = document.getElementById("username");
+            let signin_form = document.getElementById("signin_form");
+
+            // 로그인 버튼 클릭시
+            // 만약 아이디/비밀번호에 아무런 입력도 없으면
+            // alert창 뜨고 false 반환
+            // 아니면 
+            signin_btn.addEventListener("click", ()=>{
+                if(!username.value){
+                    alert("아이디를 입력해주세요.");
+                    return false;
+                }
+                if(!password.value){
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                signin_form.submit() 
+            })
+            
+        </script>
     
     </div>
 </div>
+
+{% for message in messages %}
+    <div class="alert alert-primary" role="alert">{{ message }}</div>
+{% endfor %}
 {% endblock %}
