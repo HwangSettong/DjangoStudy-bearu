@@ -1,3 +1,16 @@
-<div style="background-color: red;width: 100%;height: 100px;">
-    여기는 네비게이션 영역입니다
+<div class="row text-center border-bottom align-items-center" style="padding: 10px;">
+    <div class="col text-start">
+        <a class="text-decoration-none fs-1" style="font-weight: bold;">Anonymous</a> <!-- 서비스명 -->
+    </div>
+    <div class="col text-end">
+        {% if request.user.is_authenticated %} <!-- user가 로그인 되어 있으면-->
+            <p class="m-0">{{ request.user.nickname }}님</p>
+            <a class="btn btn-primary">글쓰기</a>
+            <a class="btn btn-primary" href="{% url 'signout' %}">로그아웃</a>
+        {% else %} <!-- 아니면 -->
+            <a class="btn btn-primary" href="{% url 'signin' %}">로그인</a>
+        {% endif %} <!-- if문 끝 -->
+    </div>
 </div>
+<div class="row text-center"></div>
+

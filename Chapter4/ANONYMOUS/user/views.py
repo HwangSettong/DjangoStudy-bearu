@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 # render(request, template_name, context=None, content_type=None, status=None, using=None) : HttpResponse렌더링된 텍스트가 포함된 객체를 반환
 # redirect(to, *args, permanent=False, **kwargs) : HttpResponseRedirect전달된 인수에 대한 적절한 URL을 반환
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # authenticate(request=None, **credentials): User 인증 함수. 자격 증명이 유효한 경우 User 객체를, 그렇지 않은 경우 None을 반환
 # login(request, user, backend=None) : 로그인 함수. Django의 세션 프레임 워크를 사용하여 세션에 인증된 사용자의 ID를 저장
 from django.contrib.auth.hashers import make_password
@@ -51,3 +51,8 @@ def signup(request):
             new_user.save() # data insert
             login(request, new_user) # login 세션에 사용자 바로 저장
             return redirect("board")
+
+def signout(request):
+    if request.method=="GET":
+        logout(request)
+        return redirect("board")
