@@ -1,0 +1,20 @@
+{% extends "common/base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-body text-end">
+        <form method="post" enctype="multipart/form-data"> <!--파일까지 함께 보내기 때문에 enctype 속성도 추가-->
+            <input class="form-control my-2" type="text" name="title" placeholder="제목을 입력하세요.">
+            <textarea
+            class="form-control  my-2"
+            name="content"
+            style="height: 150px;resize: none;"
+            placeholder="한번 작성된 글은 삭제할 수 없습니다. 매너를 지켜주세요."></textarea>
+            <input class="form-control my-2" type="file" name="img" accept="*/image">
+            <a class="btn btn-outline-primary my-2"
+            style="font-weight: bold;">저장</a>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
