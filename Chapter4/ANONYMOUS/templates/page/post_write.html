@@ -2,19 +2,34 @@
 {% block content %}
 <div class="card">
     <div class="card-body text-end">
-        <form method="post" enctype="multipart/form-data"> <!--파일까지 함께 보내기 때문에 enctype 속성도 추가-->
-            <input class="form-control my-2" type="text" name="title" placeholder="제목을 입력하세요.">
+        <form method="post" enctype="multipart/form-data" id="write_form"> <!--파일까지 함께 보내기 때문에 enctype 속성도 추가-->
+            {% csrf_token %}
+            <input class="form-control my-2" type="text" id="title" name="title" placeholder="제목을 입력하세요.">
             <textarea
             class="form-control  my-2"
+            id="content"
             name="content"
             style="height: 150px;resize: none;"
             placeholder="한번 작성된 글은 삭제할 수 없습니다. 매너를 지켜주세요."></textarea>
             <input class="form-control my-2" type="file" name="img" accept="*/image">
-            <a class="btn btn-outline-primary my-2"
+            <a class="btn btn-outline-primary my-2" id="write_btn"
             style="font-weight: bold;">저장</a>
         </form>
     </div>
 </div>
+<script>
+    let title = document.getElementById("title");
+    let content = document.getElementById("content");
+    let write_btn = document.getElementById("write_btn");
+    let write_form = document.getElementById("write_form");
 
+    write_btn.addEventListener("click", ()=>{
+        if(title.value === "" || content.value === ""){
+            alert("내용을 입력해주세요");
+        }else{
+            write_form.submit() 
+        }
+    })
 
+</script>
 {% endblock %}
