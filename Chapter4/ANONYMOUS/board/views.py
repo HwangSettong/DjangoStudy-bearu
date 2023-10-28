@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from board.models import Post
+from board.models import Post, Comment
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required # login_required라는 decorator를 가져옴
 from django.core.files.storage import default_storage # 장고에서 내부적으로 파일시스템을 관장할 때 해당 파일을 변경/저장/삭제 하는 함수
@@ -55,4 +55,13 @@ def post_detail(request, post_id):
         context = {
             "post": post
         }
-        return render(request, 'page/post_detail.html')
+        return render(request, 'page/post_detail.html', context=context)
+    
+    if request.method == "POST":
+        content = request.POST["content"]
+        Comment(
+            post_id = post_id,
+            content = content,
+        ).save()
+
+        return redirect('post_detail', post_id)

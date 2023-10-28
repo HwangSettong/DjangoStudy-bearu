@@ -21,7 +21,9 @@
 						<h5>{{ post.title }}</h5>
 						<p>{{ post.content }}</p>
 						<p>{{ post.user.nickname }} <small>{{ post.reg_date|date:"Y-m-d" }}</small></p>
-						<p>{{ post.comment_set.all.count }}</p>
+						<p><span class="material-symbols-outlined" style="font-size: 16px">
+							comment
+							</span> {{ post.comment_set.all.count }}</p>
 					</div>
 				</a>
 			</div>

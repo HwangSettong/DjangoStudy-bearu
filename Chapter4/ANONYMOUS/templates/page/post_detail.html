@@ -3,12 +3,14 @@
 <div class="card">
     <div class="card-body">
         <!--게시글 상세 내용-->
-        <div class="row">
+        <div class="row my-3">
             <div class="col">
-                <h4 class="card-title" style="font-weight: bold;">제목</h4>
-                <p class="card-subtitle" style="font-size: 12px">닉네임<small style="color: gray;">  날짜</small></p>
-                <p class="card-text">내용</p>
-                <img src="">
+                <h4 class="card-title" style="font-weight: bold;">{{ post.title }}</h4>
+                <p class="card-subtitle" style="font-size: 12px">{{ post.user.nickname }}<small style="color: gray;">  {{ post.reg_date|date:"Y-m-d H:i:s" }}</small></p>
+                <p class="card-text">{{ post.content }}</p>
+                {% if post.img_url %}
+                    <img src="/upload/{{ post.img_url }}">
+                {% endif %}
             </div>
         </div>
 
@@ -17,25 +19,59 @@
             <div class="row text-end my-2">
                 <div class="col">
                     <div class="card-body">
-                        <form class="input-group text-center">
+                        <form method="post" class="input-group text-center" id="comment_form">
+                            {% csrf_token %}
                             <textarea class="form-control"
                             placeholder="한번 작성한 댓글은 삭제할 수 없습니다. 매너를 지켜주세요."
+                            id="content"
+                            name="content"
                             style="resize: none;height: 100px;"></textarea>
                             <a class="btn btn-outline-primary" id="write_btn"
-                            style="font-weight: bold;height: 100px;width: 70px;">등록</a>
+                            style="font-weight: bold;height: 100px;width: 70px;pointer-events:none;">등록</a>
                         </form>
                     </div>
                 </div>
             </div>
             <!-- 댓글 리스트 -->
+            {% for comment in post.comment_set.all %}
             <div class="row my-2">
                 <div class="col border-top py-2 mx-3">
-                    <p style="font-weight: bold;">닉네임</p>
-                    <p style="word-break: break-all;">내용이 길이지면 글이 주어진 영역을 넘어가게 되기 때문에 "word-break: break-all"을 style로 명시해줘야 한다.</p>
-                    <p style="color: gray;font-size: 12px;">날짜</p>
+                    <p style="word-break: break-all;">{{comment.content}}</p>
+                    <p style="color: gray;font-size: 12px;">{{comment.reg_date|date:"Y-m-d H:i:s"}}</p>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+
+<script>
+    
+    let content = document.getElementById("content")
+    let write_btn = document.getElementById("write_btn")
+    let comment_form = document.getElementById("comment_form")
+    
+    // // 버튼을 눌렀을 때 내용이 있어야만 댓글 등록이 됨
+    // write_btn.addEventListener("click", ()=>{
+    //     if(content.value === ""){
+    //         alert("댓글 내용을 작성해주세요.")
+    //     }
+    //     else{
+    //         comment_form.submit()
+    //     }
+    // })
+    
+    // 댓글 내용이 있어야만 등록 버튼이 작동 됨.
+    write_btn.addEventListener("click", ()=>{ comment_form.submit()})
+    content.addEventListener("keyup", ()=>{
+        if(content.value){
+            write_btn.style.pointerEvents = "all"
+        }else{
+            write_btn.style.pointerEvents = "none"
+        }
+    })
+    
+
+
+</script>
 {% endblock %}
