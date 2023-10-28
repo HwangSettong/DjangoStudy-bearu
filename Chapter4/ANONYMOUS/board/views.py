@@ -48,3 +48,11 @@ def post_write(request):
         ).save()
         return redirect('board')
 
+
+def post_detail(request, post_id):
+    if request.method == "GET":
+        post = Post.objects.get(id = post_id)
+        context = {
+            "post": post
+        }
+        return render(request, 'page/post_detail.html')

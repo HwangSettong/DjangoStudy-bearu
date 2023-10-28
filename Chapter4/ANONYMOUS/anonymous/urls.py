@@ -1,5 +1,5 @@
 from django.urls import path
-from board.views import board, post_write # import function 'board', 'post_write' of 'board/views'
+from board.views import board, post_write, post_detail # import function 'board', 'post_write', 'post_detail' of 'board/views'
 from user.views import signin, signup, signout # import function 'signin','signup', 'signout' of 'user/views'
 
 urlpatterns = [
@@ -8,5 +8,7 @@ urlpatterns = [
     path('user/signin', signin, name="signin"),
     path('user/signup', signup, name="signup"),
     path('user/signout', signout, name="signout"),
+
     path('post/write', post_write, name="post_write"),
+    path('post/<int:post_id>', post_detail, name="post_detail"),
 ]
